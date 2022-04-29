@@ -27,6 +27,21 @@
   </div>
 
   <div class="field">
+    <%= f.label :id_number %><br />
+    <%= f.number_field :id_number, autocomplete: "id_number" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :full_name %><br />
+    <%= f.text_field :name, autocomplete: "name" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :phone_number %><br />
+    <%= f.text_field :phone, autocomplete: "phone" %>
+  </div>
+
+  <div class="field">
     <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
     <%= f.password_field :current_password, autocomplete: "current-password" %>
   </div>
