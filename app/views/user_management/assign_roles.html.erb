@@ -32,7 +32,7 @@
           </select>
         </td>
         <td><%= link_to 'Show', user_management_show_path %></td>
-        <td><%= link_to 'Edit', edit_user_registration_path(user) %></td>
+        <td><%= link_to 'Edit', user_management_edit_path(id: user.id) %></td>
         <td><%= link_to 'Destroy', cancel_user_registration_path, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>

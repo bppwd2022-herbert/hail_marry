@@ -16,6 +16,7 @@ class UserManagementController < ApplicationController
   end
 
   def edit
+    @user = User.find(params[:id])
   end
 
   def create
@@ -33,9 +34,11 @@ class UserManagementController < ApplicationController
   end
 
   def update
+    @user = User.find(params[:id])
+
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to user_url(@user), notice: "User was successfully updated." }
+        format.html { redirect_to user_management_edit_path(@user), notice: "User was successfully updated." }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit, status: :unprocessable_entity }
