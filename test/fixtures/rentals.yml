@@ -2,14 +2,16 @@
 
 one:
   condition: MyString
-  return_date: 2022-05-08
-  estimate_return_date: 2022-05-08
-  rented_date: 
-  user: 
+  return_ate: 2022-05-09
+  estimatte_return_date: 2022-05-09
+  rented_date: 2022-05-09
+  user: one
+  item: one
 
 two:
   condition: MyString
-  return_date: 2022-05-08
-  estimate_return_date: 2022-05-08
-  rented_date: 
-  user: 
+  return_ate: 2022-05-09
+  estimatte_return_date: 2022-05-09
+  rented_date: 2022-05-09
+  user: two
+  item: two

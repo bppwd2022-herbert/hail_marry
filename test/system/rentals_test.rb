@@ -14,6 +14,12 @@ class RentalsTest < ApplicationSystemTestCase
     visit rentals_url
     click_on "New Rental"
 
+    fill_in "Condition", with: @rental.condition
+    fill_in "Estimatte return date", with: @rental.estimatte_return_date
+    fill_in "Item", with: @rental.item_id
+    fill_in "Rented date", with: @rental.rented_date
+    fill_in "Return ate", with: @rental.return_ate
+    fill_in "User", with: @rental.user_id
     click_on "Create Rental"
 
     assert_text "Rental was successfully created"
@@ -24,6 +30,12 @@ class RentalsTest < ApplicationSystemTestCase
     visit rentals_url
     click_on "Edit", match: :first
 
+    fill_in "Condition", with: @rental.condition
+    fill_in "Estimatte return date", with: @rental.estimatte_return_date
+    fill_in "Item", with: @rental.item_id
+    fill_in "Rented date", with: @rental.rented_date
+    fill_in "Return ate", with: @rental.return_ate
+    fill_in "User", with: @rental.user_id
     click_on "Update Rental"
 
     assert_text "Rental was successfully updated"

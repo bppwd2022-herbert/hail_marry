@@ -11,7 +11,52 @@
   </head>
 
   <body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/home/index">Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/items">Items</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/user_management/assign_roles">Users</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/roles">Roles</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/rentals">Rentls</a>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav ms-auto w-100 justify-content-end me-md-5">
+            <li class="nav-item dropdown flex-row-reverse">
+              <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <%= @user_name %>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href=" <%= new_user_session_path %> ">Sign In</a></li>
+                <% if user_signed_in? %>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" herf="<%= link_to "Sign out", destroy_user_session_path, :method => :delete %> </a></li>
+                <% else %>
+                  <li><a class="dropdown-item" href=" <%= new_user_session_path %> ">Sign In</a></li>
+                  <li><a class="dropdown-item" href=" <%= new_user_registration_path %> ">Sign Up</a></li>
+                <% end %>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
     <%= yield %>
+
+
 
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>

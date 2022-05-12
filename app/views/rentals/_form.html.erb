@@ -11,6 +11,36 @@
     </div>
   <% end %>
 
+  <div class="field">
+    <%= form.label :condition %>
+    <%= form.text_field :condition %>
+  </div>
+
+  <div class="field">
+    <%= form.label :return_date %>
+    <%= form.date_select :return_ate %>
+  </div>
+
+  <div class="field">
+    <%= form.label :estimatte_return_date %>
+    <%= form.date_select :estimatte_return_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :rented_date %>
+    <%= form.date_select :rented_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :user_id %>
+    <%= form.text_field :user_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :item_id %>
+    <%= form.text_field :item_id %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

@@ -4,6 +4,8 @@ class RentalsController < ApplicationController
   # GET /rentals or /rentals.json
   def index
     @rentals = Rental.all
+    @users = User.all
+    @items = Item.all
   end
 
   # GET /rentals/1 or /rentals/1.json
@@ -65,6 +67,6 @@ class RentalsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def rental_params
-      params.fetch(:rental, {})
+      params.require(:rental).permit(:condition, :return_ate, :estimatte_return_date, :rented_date, :user_id, :item_id)
     end
 end

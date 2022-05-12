@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_08_230006) do
+ActiveRecord::Schema.define(version: 2022_05_09_143600) do
 
   create_table "items", force: :cascade do |t|
     t.string "name"
@@ -22,11 +22,11 @@ ActiveRecord::Schema.define(version: 2022_05_08_230006) do
 
   create_table "rentals", force: :cascade do |t|
     t.string "condition"
-    t.date "return_date"
-    t.date "estimate_return_date"
+    t.date "return_ate"
+    t.date "estimatte_return_date"
     t.date "rented_date"
-    t.integer "user_id"
-    t.integer "item_id"
+    t.integer "user_id", null: false
+    t.integer "item_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["item_id"], name: "index_rentals_on_item_id"
@@ -64,6 +64,8 @@ ActiveRecord::Schema.define(version: 2022_05_08_230006) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "rentals", "items"
+  add_foreign_key "rentals", "users"
   add_foreign_key "roles_users", "clients"
   add_foreign_key "roles_users", "users"
 end

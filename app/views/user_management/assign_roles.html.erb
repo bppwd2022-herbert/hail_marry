@@ -5,11 +5,12 @@
 <table>
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Id Number</th>
-      <th>Phone Number</th>
-      <th>E-mail Account</th>
-      <th>Role List</th>
+      <th>Name  |</th>
+      <th>Id Number  |</th>
+      <th>Phone Number  |</th>
+      <th>E-mail Account  |</th>
+      <th>Id  |</th>
+      <th>Role List  </th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -17,11 +18,12 @@
   <tbody>
     <% @users.each do |user| %>
       <tr>
-        <td><%= user.name %></td>
-        <td><%= user.id_number %></td>
-        <td><%= user.phone %></td>
-        <td><%= user.email %></td>
-        <td>
+        <td> <%= user.name %></td>
+        <td> <%= user.id_number %></td>
+        <td> <%= user.phone %></td>
+        <td> <%= user.email %></td>
+        <td> <%= user.id %></td>
+        <td> 
           <select class="form-select">
             <option selected>Select role</option>
             <% @roles.each do |role| %>
@@ -29,7 +31,7 @@
             <% end %>
           </select>
         </td>
-        <td><%= link_to 'Show', edit_user_registration_path %></td>
+        <td><%= link_to 'Show', user_management_show_path %></td>
         <td><%= link_to 'Edit', edit_user_registration_path(user) %></td>
         <td><%= link_to 'Destroy', cancel_user_registration_path, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
@@ -39,4 +41,4 @@
 
 <br>
 
-<%= link_to 'New User', new_user_registration_path %>
+<%= link_to 'New User', user_management_new_path %>
