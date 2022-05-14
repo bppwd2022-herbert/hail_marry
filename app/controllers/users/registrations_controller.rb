@@ -2,7 +2,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def create
   #   # Your custom code here. Make sure you copy devise's functionality
   # end
-  skip_before_action :require_no_authentication, only: [:new, :create, :cancel]
+  skip_before_action :require_no_authentication, only: [:new, :create, :cancel, :update, :edit]
 
   # def check_permissions
   #   authorize! :create, resource

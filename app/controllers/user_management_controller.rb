@@ -7,7 +7,7 @@ class UserManagementController < ApplicationController
 
 
   def show
-    @user = User.find(user_params)
+    @user = User.find(params[:id])
     @roles = Role.all
   end
 
@@ -17,6 +17,8 @@ class UserManagementController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
+
+    # params  @user.password_confirmation
   end
 
   def create
@@ -33,12 +35,19 @@ class UserManagementController < ApplicationController
     end
   end
 
+  def update_resource(resource, params)
+    # Require current password if user is trying to change password.
+    return super if params["password"]&.present?
+
+    # Allows user to update registration information without password.
+    resource.update_without_password(params.except("current_password"))
+  end
   def update
     @user = User.find(params[:id])
-
     respond_to do |format|
+
       if @user.update(user_params)
-        format.html { redirect_to user_management_edit_path(@user), notice: "User was successfully updated." }
+        format.html { redirect_to user_management_show_path(id: @user), notice: "User was successfully updated." }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -64,7 +73,7 @@ class UserManagementController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.permit(:user, :email, :password, :id_number, :name, :phone)
+      params.require(:user).permit(:id, :email, :password, :id_number, :name, :phone, :current_password, :password_confirmation)
     end
 
 end

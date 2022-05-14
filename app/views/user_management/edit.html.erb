@@ -1,6 +1,6 @@
 <h1>Editing User</h1>
 
-<%= render 'form', user: @user %>
+<%= render 'form', user: @user, path: user_management_update_resource_path(id: @user) %>
 
 <%= link_to 'Show', @user %> |
 <%= link_to 'Back', user_management_assign_roles_path %>
