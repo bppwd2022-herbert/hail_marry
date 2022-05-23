@@ -16,15 +16,19 @@
     <%= form.text_field :email %>
   </div>
 
-  <div class="field">
-    <%= form.label :password %>
-    <%= form.text_field :password %>
-  </div>
+  <% if request.path == '/user_management/new' %>
 
-  <div class="field">
-    <%= form.label :password_confirmation %>
-    <%= form.text_field :password_confirmation %>
-  </div>
+    <div class="field">
+      <%= form.label :password %>
+      <%= form.text_field :password %>
+    </div>
+
+    <div class="field">
+      <%= form.label :password_confirmation %>
+      <%= form.text_field :password_confirmation %>
+    </div>
+
+  <% end %>
 
   <div class="field">
     <%= form.label :id_number %>
@@ -41,10 +45,7 @@
     <%= form.text_field :phone %>
   </div>
 
-  <div class="field">
-    <%= form.label :current_password %>
-    <%= form.text_field :current_password %>
-  </div>
+  
 
   <div class="actions">
     <%= form.submit %>

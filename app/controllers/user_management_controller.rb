@@ -2,6 +2,8 @@ class UserManagementController < ApplicationController
   def assign_roles
     @users = User.all
     @roles = Role.all
+
+    
   end
 
 
@@ -26,7 +28,7 @@ class UserManagementController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to user_url(@user), notice: "User was successfully created." }
+        format.html { redirect_to user_management_show_path(@user.id), notice: "User was successfully created." }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -37,16 +39,22 @@ class UserManagementController < ApplicationController
 
   def update_resource(resource, params)
     # Require current password if user is trying to change password.
-    return super if params["password"]&.present?
+    return super if params[user.password]&.present?
 
     # Allows user to update registration information without password.
     resource.update_without_password(params.except("current_password"))
   end
   def update
-    @user = User.find(params[:id])
-    respond_to do |format|
 
+    if URI(request.referer).path == '/user_management/edit'
+      @user = User.find(params[:id])
+    elsif URI(request.referer).path == '/user_management/create'
+      @user = params[:user]
+    end
+
+    respond_to do |format|
       if @user.update(user_params)
+
         format.html { redirect_to user_management_show_path(id: @user), notice: "User was successfully updated." }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -56,14 +64,9 @@ class UserManagementController < ApplicationController
     end
   end
 
-  def destroy
-    @user.destroy
 
-    respond_to do |format|
-      format.html { redirect_to cancel_user_registration_path, notice: "User was successfully destroyed." }
-      format.json { head :no_content }
-    end
-  end
+
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -73,7 +76,7 @@ class UserManagementController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:id, :email, :password, :id_number, :name, :phone, :current_password, :password_confirmation)
+      params.require(:user).permit(:id, :email, :password, :id_number, :name, :phone, :password_confirmation)
     end
 
 end

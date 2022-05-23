@@ -8,7 +8,6 @@ Rails.application.routes.draw do
   patch 'user_management/update'
   get 'user_management/show'
   patch 'user_management/update_resource'
-
   get 'user_management/edit'
   get 'user_management/new'
   post 'user_management/create'
@@ -16,7 +15,6 @@ Rails.application.routes.draw do
   get 'home/index'
   devise_for :users, :controllers => { :registrations => "users/registrations" }, :path_prefix => 'my'
   resources :users
-
   as :user do
     get "/register", to: "registrations#new", as: "register"
   end

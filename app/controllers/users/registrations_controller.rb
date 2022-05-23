@@ -39,7 +39,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
 
-  
+  def destroy
+    User.find(params[:id]).destroy
+    set_flash_message! :notice, :destroyed
+    yield @cu if block_given?
+    respond_with_navigational(@cu){ redirect_to user_management_assign_roles_path }
+  end
+
+
+
   private
 
   # Notice the name of the method

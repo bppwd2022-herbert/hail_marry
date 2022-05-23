@@ -25,5 +25,5 @@
   <%= @user.password %>
 </p>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Edit', user_management_edit_path(id: @user.id) %> |
 <%= link_to 'Back', user_management_assign_roles_path %>

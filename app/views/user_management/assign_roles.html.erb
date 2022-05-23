@@ -18,11 +18,11 @@
   <tbody>
     <% @users.each do |user| %>
       <tr>
-        <td> <%= user.name %></td>
-        <td> <%= user.id_number %></td>
-        <td> <%= user.phone %></td>
-        <td> <%= user.email %></td>
-        <td> <%= user.id %></td>
+        <td> <%= user.name %> </td>
+        <td> <%= user.id_number %> </td>
+        <td> <%= user.phone %> </td>
+        <td> <%= user.email %> </td>
+        <td> <%= user.id %> </td>
         <td> 
           <select class="form-select">
             <option selected>Select role</option>
@@ -31,9 +31,9 @@
             <% end %>
           </select>
         </td>
-        <td><%= link_to 'Show', user_management_show_path %></td>
+        <td><%= link_to 'Show', user_management_show_path(id: user.id) %></td>
         <td><%= link_to 'Edit', user_management_edit_path(id: user.id) %></td>
-        <td><%= link_to 'Destroy', cancel_user_registration_path, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to "Delete", user_registration_path(user, id: user.id), :method => :delete, :confirm => "You sure?" %></td>
       </tr>
     <% end %>
   </tbody>
