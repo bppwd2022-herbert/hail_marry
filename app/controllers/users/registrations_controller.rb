@@ -42,8 +42,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def destroy
     User.find(params[:id]).destroy
     set_flash_message! :notice, :destroyed
-    yield @cu if block_given?
-    respond_with_navigational(@cu){ redirect_to user_management_assign_roles_path }
+    yield resource if block_given?
+    redirect_to user_management_assign_roles_path, notice: "User was successfully deleted."
   end
 
 

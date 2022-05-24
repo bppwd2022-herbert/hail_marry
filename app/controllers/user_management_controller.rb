@@ -2,8 +2,6 @@ class UserManagementController < ApplicationController
   def assign_roles
     @users = User.all
     @roles = Role.all
-
-    
   end
 
 
@@ -19,7 +17,7 @@ class UserManagementController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
-
+    @roles = Role.all
     # params  @user.password_confirmation
   end
 
@@ -28,7 +26,7 @@ class UserManagementController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to user_management_show_path(@user.id), notice: "User was successfully created." }
+        format.html { redirect_to user_management_show_path(id: @user.id), notice: "User was successfully created." }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new, status: :unprocessable_entity }

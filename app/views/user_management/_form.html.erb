@@ -44,13 +44,22 @@
     <%= form.label :phone %>
     <%= form.text_field :phone %>
   </div>
-  
-  <select class="form-select">
-    <option selected>Select role</option>
-    <% fields_for @role do |role| %>
-      <option> <%= role.name %> </option>
+
+  <div class="field">
+    <%= form.label :role %>
+    <% @roles.each do |role, index| %>
+      <div class="form-check">
+        <% if user.roles.index(role) %>
+          <input type="radio" name="role_lst" id="<%= role.name %>" value="HTML" checked="checked">
+          <label class="form-check-label"><%= role.name %></label>
+        <% else %>
+          <input type="radio" name="role_lst" value="HTML">
+          <label class="form-check-label"><%= role.name %></label>
+        <% end %>
+
+      </div>
     <% end %>
-  </select>
+  </div>
 
   <div class="actions">
     <%= form.submit %>

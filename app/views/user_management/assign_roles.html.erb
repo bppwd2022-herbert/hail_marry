@@ -5,35 +5,28 @@
 <table>
   <thead>
     <tr>
-      <th>Name  |</th>
-      <th>Id Number  |</th>
-      <th>Phone Number  |</th>
-      <th>E-mail Account  |</th>
-      <th>Id  |</th>
-      <th>Role List  </th>
+      <th> Name  |</th>
+      <th> School ID  |</th>
+      <th> Phone Number  |</th>
+      <th> E-mail Account  |</th>
+      <th> Id  |</th>
+      <th> Role  </th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @users.each do |user| %>
+    <% @users.each do |userx| %>
       <tr>
-        <td> <%= user.name %> </td>
-        <td> <%= user.id_number %> </td>
-        <td> <%= user.phone %> </td>
-        <td> <%= user.email %> </td>
-        <td> <%= user.id %> </td>
-        <td> 
-          <select class="form-select">
-            <option selected>Select role</option>
-            <% @roles.each do |role| %>
-                <option> <%= role.name %> </option>
-            <% end %>
-          </select>
-        </td>
-        <td><%= link_to 'Show', user_management_show_path(id: user.id) %></td>
-        <td><%= link_to 'Edit', user_management_edit_path(id: user.id) %></td>
-        <td><%= link_to "Delete", user_registration_path(user, id: user.id), :method => :delete, :confirm => "You sure?" %></td>
+        <td> <%= userx.name %> </td>
+        <td> <%= userx.id_number %> </td>
+        <td> <%= userx.phone %> </td>
+        <td> <%= userx.email %> </td>
+        <td> <%= userx.id %> </td>
+        <td> <%= userx.roles.name %> </td>
+        <td><%= link_to 'Show', user_management_show_path(id: userx.id) %></td>
+        <td><%= link_to 'Edit', user_management_edit_path(id: userx.id) %></td>
+        <td><%= link_to "Delete", user_registration_path(userx, id: userx.id), :method => :delete, data: { confirm: 'Are you sure you want to delete this user?' } %></td>
       </tr>
     <% end %>
   </tbody>

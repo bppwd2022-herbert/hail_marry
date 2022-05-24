@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  has_and_belongs_to_many :roles
+  has_and_belongs_to_many :roles, :inverse_of => :user
   has_many :rentals
   has_many :items, through: :rentals
   # Include default devise modules. Others available are:
