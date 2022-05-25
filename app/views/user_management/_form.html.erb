@@ -16,7 +16,7 @@
     <%= form.text_field :email %>
   </div>
 
-  <% if request.path == '/user_management/new' %>
+  <% if request.path == "/user_management/new" %>
 
     <div class="field">
       <%= form.label :password %>
@@ -45,27 +45,31 @@
     <%= form.text_field :phone %>
   </div>
 
-  <div class="field">
-    <%= form.label :role %>
-    <% @roles.each do |role| %>
-      <div class="form-check">
-        <% if user.roles.index(role) %>
-          <%= form.radio_button(:roles, role.id, :checked => 'checked') %>
-          <%= form.label(role.id, role.name) %>
-        <% else %>
-          <%= form.radio_button(:roles, role.id) %>
-          <%= form.label(role.id, role.name) %>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-
-
   <div class="actions">
     <%= form.submit %>
   </div>
 <% end %>
 
 
+<%= form_with(model: @role, url: path) do |form| %>
+  <% if request.path == "/user_management/edit" %>
+    <div class="field">
+      <%= form.label :role %>
+      <% @roles.each do |role| %>
+        <div class="form-check">
+          <% if user.roles.index(role) %>
+            <%= form.radio_button(:role_id, role.id, :checked => 'checked') %>
+            <%= form.label(role.id, role.name) %>
+          <% else %>
+            <%= form.radio_button(:role_id, role.id) %>
+            <%= form.label(role.id, role.name) %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
 
-  
+    <div class="actions">
+      <%= form.submit "Update User's Role"%>
+    </div>
+  <% end %>
+<% end %>

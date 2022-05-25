@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get 'user_management/show'
   patch 'user_management/update_resource'
   get 'user_management/edit'
+  get 'user_management/create'
+  post 'user_management/update'
   get 'user_management/new'
   post 'user_management/create'
   resources :roles
