@@ -47,21 +47,25 @@
 
   <div class="field">
     <%= form.label :role %>
-    <% @roles.each do |role, index| %>
+    <% @roles.each do |role| %>
       <div class="form-check">
         <% if user.roles.index(role) %>
-          <input type="radio" name="role_lst" id="<%= role.name %>" value="HTML" checked="checked">
-          <label class="form-check-label"><%= role.name %></label>
+          <%= form.radio_button(:roles, role.id, :checked => 'checked') %>
+          <%= form.label(role.id, role.name) %>
         <% else %>
-          <input type="radio" name="role_lst" value="HTML">
-          <label class="form-check-label"><%= role.name %></label>
+          <%= form.radio_button(:roles, role.id) %>
+          <%= form.label(role.id, role.name) %>
         <% end %>
-
       </div>
     <% end %>
   </div>
+
 
   <div class="actions">
     <%= form.submit %>
   </div>
 <% end %>
+
+
+
+  

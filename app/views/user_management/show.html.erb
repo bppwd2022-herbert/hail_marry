@@ -21,8 +21,8 @@
 </p>
 
 <p>
-  <strong>E Mail:</strong>
-  <%= @user.email %>
+  <strong>Role:</strong>
+  <%= @user.roles.name %>
 </p>
 
 <%= link_to 'Edit', user_management_edit_path(id: @user.id) %> |

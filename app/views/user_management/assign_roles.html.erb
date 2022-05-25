@@ -10,7 +10,8 @@
       <th> Phone Number  |</th>
       <th> E-mail Account  |</th>
       <th> Id  |</th>
-      <th> Role  </th>
+      <th> Role  |</th>
+      <th> Role Id  </th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -23,7 +24,12 @@
         <td> <%= userx.phone %> </td>
         <td> <%= userx.email %> </td>
         <td> <%= userx.id %> </td>
-        <td> <%= userx.roles.name %> </td>
+        <% userx.roles.each do |rx| %>
+          <td> <%= rx.name %> </td>
+          <td> <%= rx.id %> </td>
+        <% end %>
+
+
         <td><%= link_to 'Show', user_management_show_path(id: userx.id) %></td>
         <td><%= link_to 'Edit', user_management_edit_path(id: userx.id) %></td>
         <td><%= link_to "Delete", user_registration_path(userx, id: userx.id), :method => :delete, data: { confirm: 'Are you sure you want to delete this user?' } %></td>

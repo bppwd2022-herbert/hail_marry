@@ -37,3 +37,14 @@ document.addEventListener("turbolinks:load", () => {
         return new Popover(popoverTriggerEl)
     })
 })
+
+document.addEventListener("turbolinks:load", () => {
+    $.ajax({
+    type: "POST",
+    url: "/update",
+    data: data,
+    success: success,
+    dataType: dataType
+});
+
+})

@@ -45,10 +45,10 @@ ActiveRecord::Schema.define(version: 2022_05_23_175544) do
 
   create_table "roles_users", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.integer "client_id", null: false
+    t.integer "role_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["client_id"], name: "index_roles_users_on_client_id"
+    t.index ["role_id"], name: "index_roles_users_on_role_id"
     t.index ["user_id"], name: "index_roles_users_on_user_id"
   end
 
@@ -69,6 +69,6 @@ ActiveRecord::Schema.define(version: 2022_05_23_175544) do
 
   add_foreign_key "rentals", "items"
   add_foreign_key "rentals", "users"
-  add_foreign_key "roles_users", "clients"
+  add_foreign_key "roles_users", "roles"
   add_foreign_key "roles_users", "users"
 end
