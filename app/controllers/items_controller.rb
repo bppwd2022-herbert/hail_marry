@@ -1,28 +1,40 @@
 class ItemsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_item, only: %i[ show edit update destroy ]
-
-  # GET /items or /items.json
   def index
     @items = Item.all
+    @rentals = Rental.all
+    @rentables = is_rentable
+    authorize :dashboard, :index?
   end
 
-  # GET /items/1 or /items/1.json
   def show
+    @rentals = Rental.where(item_id: params[:id])
+    @rentable = true
+    @rentals.each do |rentalx|
+      if rentalx.return_ate.nil?
+        @rentable = false
+      else
+        if rentalx.return_ate.future?
+          @rentable = false
+        end
+      end
+    end
+    authorize :dashboard, :show?
   end
 
-  # GET /items/new
   def new
     @item = Item.new
+    authorize :dashboard, :new?
   end
 
-  # GET /items/1/edit
   def edit
+    authorize :dashboard, :edit?
   end
 
-  # POST /items or /items.json
   def create
     @item = Item.new(item_params)
-
+    authorize :dashboard, :create?
     respond_to do |format|
       if @item.save
         format.html { redirect_to item_url(@item), notice: "Item was successfully created." }
@@ -34,8 +46,8 @@ class ItemsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /items/1 or /items/1.json
   def update
+    authorize :dashboard, :update?
     respond_to do |format|
       if @item.update(item_params)
         format.html { redirect_to item_url(@item), notice: "Item was successfully updated." }
@@ -47,23 +59,45 @@ class ItemsController < ApplicationController
     end
   end
 
-  # DELETE /items/1 or /items/1.json
   def destroy
+    authorize :dashboard, :destroy?
+    @item = Item.find(params[:id])
+    @item_rentals = Rental.where(item: @item.id)
+    @item_rentals.each do |rentalx|
+      rentalx.destroy
+    end
     @item.destroy
-
     respond_to do |format|
       format.html { redirect_to items_url, notice: "Item was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
+
+  def is_rentable
+    @items = Item.all
+    rentable_items = []
+
+    @items.each do |itemx|
+      item_rentals = Rental.where(item_id: itemx.id)
+      rentable = true
+      
+      item_rentals.each do |rentalx|
+        if rentalx.return_ate.nil? || rentalx.return_ate.future?
+          rentable = false
+        end
+      end
+
+      rentable_items << rentable
+    end
+    return rentable_items
+  end
+
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_item
       @item = Item.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def item_params
       params.require(:item).permit(:name, :description, :notes)
     end

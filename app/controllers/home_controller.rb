@@ -3,6 +3,5 @@ class HomeController < ApplicationController
   #skip_before_action :require_no_authentication, only: [:new, :create]
 
   def index
-    
   end
 end

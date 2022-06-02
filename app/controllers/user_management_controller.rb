@@ -1,31 +1,35 @@
 class UserManagementController < ApplicationController
+  before_action :authenticate_user!
   def assign_roles
     @users = User.all
     @roles = Role.all
+    authorize @user, policy_class: UserManagementPolicy
+    @status = get_status
   end
-
-   
 
   def show
     @user = User.find(params[:id])
     @roles = Role.all
+    authorize @user.id, policy_class: UserManagementPolicy
   end
 
   def new
     @user = User.new
     @roles = Role.all
+    authorize :dashboard, :new?
   end
 
   def edit
     @user = User.find(params[:id])
     @roles = Role.all
-    
-    # params  @user.password_confirmation
+    authorize :dashboard, :edit?
   end
 
   def create
-    @user = User.new(user_params.except(:role_id, :_method, :authenticity_token, :commit))
+    @without_role = User.new(user_params.except(:role_id, :_method, :authenticity_token, :commit))
+    @user = default_role(@without_role)
     @roles = Role.all
+    authorize :dashboard, :create?
     respond_to do |format|
       if @user.save
         format.html { redirect_to user_management_show_path(id: @user.id), notice: "User was successfully created." }
@@ -46,7 +50,7 @@ class UserManagementController < ApplicationController
   end
   def update
 
-
+    authorize :dashboard, :update?
     @role = Role.where(id: params[:role_id]).take
 
     if URI(request.referer).path == '/user_management/edit'
@@ -77,16 +81,51 @@ class UserManagementController < ApplicationController
     end
   end
 
+  def default_role(new_user)
+    with_role = new_user
+    with_role.roles << Role.where(name: 'Student').first
+    return with_role
+  end
 
+  def find_current_user
+    @current_user ||= User.find_by(id: session[:user_id])
+    return @current_user
+  end
 
-
+  def get_status
+    @users = User.all
+    @rentals = Rental.all
+    @items = Item.all
+    stat_arr = []
+    @users.each do |userx|
+      if userx.rentals.present?
+        users_late_items = ""
+        counter = -3
+        userx.rentals.each do |rentalx|
+          if rentalx.estimatte_return_date.nil? || rentalx.estimatte_return_date.past?
+            if rentalx.return_ate.nil?
+              users_late_items << rentalx.item.name + ", "
+              counter += 1
+            end
+          end
+        end
+        if users_late_items.empty?
+          stat_arr << "No Late Items"
+        else
+          stat_arr << users_late_items[0...counter]
+        end
+      else
+        stat_arr << "No Rented Items"
+      end
+    end
+    return stat_arr
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
     end
-
     # Only allow a list of trusted parameters through.
     def user_params
       params.require(:user).permit(:_method, :role, :id, :email, :password, :id_number, :name, :phone, :password_confirmation, :authenticity_token, :commit)

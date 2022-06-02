@@ -40,7 +40,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
 
   def destroy
-    User.find(params[:id]).destroy
+    @user = User.find(params[:id])
+    @user_rentals = Rental.where(user: @user.id)
+    @user_rentals.each do |rentalx|
+      rentalx.destroy
+    end
+    @user.destroy
     set_flash_message! :notice, :destroyed
     yield resource if block_given?
     redirect_to user_management_assign_roles_path, notice: "User was successfully deleted."

@@ -2,7 +2,6 @@
   <% if role.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(role.errors.count, "error") %> prohibited this role from being saved:</h2>
-
       <ul>
         <% role.errors.each do |error| %>
           <li><%= error.full_message %></li>

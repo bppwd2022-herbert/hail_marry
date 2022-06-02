@@ -22,7 +22,44 @@
 
 <p>
   <strong>Role:</strong>
-  <%= @user.roles.name %>
+  <% @user.roles.each do |rolex| %>
+    <p class="ps-1"> - 
+      <%= rolex.name %>
+    </p>
+  <% end %>
+</p>
+
+<p>
+  <strong>Id:</strong>
+  <%= @user.id %>
+</p>
+
+<p>
+  <strong>Rentals:</strong>
+  <% @user.rentals.each do |rentalx| %>
+    <p class="ps-1"> - 
+      <%= rentalx.item.name %>
+      Id: 
+      <%= rentalx.item_id %>
+    </p>
+
+    <p class="ps-4">Rented On: 
+      <%= rentalx.rented_date %>
+    </p>
+
+    <% if rentalx.return_ate.nil? || rentalx.return_ate.to_date.future? %>
+      <p class="ps-4"> Estimate Return Date: 
+        <%= rentalx.estimatte_return_date %>
+      </p>
+    <% else %>
+      <p class="ps-4"> Returned On: 
+        <%= rentalx.return_ate %>
+      </p>
+    <% end %>
+    <p class="ps-4">Rental Id: 
+      <%= rentalx.id %>
+    </p>
+  <% end %>
 </p>
 
 <%= link_to 'Edit', user_management_edit_path(id: @user.id) %> |
