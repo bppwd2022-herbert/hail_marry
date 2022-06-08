@@ -15,10 +15,10 @@ class RentalsTest < ApplicationSystemTestCase
     click_on "New Rental"
 
     fill_in "Condition", with: @rental.condition
-    fill_in "Estimatte return date", with: @rental.estimatte_return_date
+    fill_in "Estimatte return date", with: @rental.estimate_return_date
     fill_in "Item", with: @rental.item_id
     fill_in "Rented date", with: @rental.rented_date
-    fill_in "Return ate", with: @rental.return_ate
+    fill_in "Return ate", with: @rental.return_date
     fill_in "User", with: @rental.user_id
     click_on "Create Rental"
 
@@ -31,10 +31,10 @@ class RentalsTest < ApplicationSystemTestCase
     click_on "Edit", match: :first
 
     fill_in "Condition", with: @rental.condition
-    fill_in "Estimatte return date", with: @rental.estimatte_return_date
+    fill_in "Estimatte return date", with: @rental.estimate_return_date
     fill_in "Item", with: @rental.item_id
     fill_in "Rented date", with: @rental.rented_date
-    fill_in "Return ate", with: @rental.return_ate
+    fill_in "Return ate", with: @rental.return_date
     fill_in "User", with: @rental.user_id
     click_on "Update Rental"
 

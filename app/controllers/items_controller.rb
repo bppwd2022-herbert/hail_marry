@@ -4,19 +4,19 @@ class ItemsController < ApplicationController
   def index
     @items = Item.all
     @rentals = Rental.all
-    @rentables = is_rentable
+    @availables = is_available
     authorize :dashboard, :index?
   end
 
   def show
     @rentals = Rental.where(item_id: params[:id])
-    @rentable = true
+    @available = true
     @rentals.each do |rentalx|
-      if rentalx.return_ate.nil?
-        @rentable = false
+      if rentalx.return_date.nil?
+        @available = false
       else
-        if rentalx.return_ate.future?
-          @rentable = false
+        if rentalx.return_date.future?
+          @available = false
         end
       end
     end
@@ -62,7 +62,7 @@ class ItemsController < ApplicationController
   def destroy
     authorize :dashboard, :destroy?
     @item = Item.find(params[:id])
-    @item_rentals = Rental.where(item: @item.id)
+    @item_rentals = Rental.where(item_id: @item.id)
     @item_rentals.each do |rentalx|
       rentalx.destroy
     end
@@ -74,23 +74,23 @@ class ItemsController < ApplicationController
   end
 
 
-  def is_rentable
+  def is_available
     @items = Item.all
-    rentable_items = []
+    available_items = []
 
     @items.each do |itemx|
       item_rentals = Rental.where(item_id: itemx.id)
-      rentable = true
+      available = true
       
       item_rentals.each do |rentalx|
-        if rentalx.return_ate.nil? || rentalx.return_ate.future?
-          rentable = false
+        if rentalx.return_date.nil? || rentalx.return_date.future?
+          available = false
         end
       end
 
-      rentable_items << rentable
+      available_items << available
     end
-    return rentable_items
+    return available_items
   end
 
   private

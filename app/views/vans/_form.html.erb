@@ -1,0 +1,37 @@
+<%= form_with(model: van) do |form| %>
+  <% if van.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(van.errors.count, "error") %> prohibited this van from being saved:</h2>
+
+      <ul>
+        <% van.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :Van_year %>
+    <%= form.number_field :vyear %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Van_make %>
+    <%= form.text_field :vmake %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Van_model %>
+    <%= form.text_field :vmodel %>
+  </div>
+
+  <div class="field">
+    <%= form.label :notes %>
+    <%= form.text_area :notes %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

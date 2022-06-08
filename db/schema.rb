@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_23_175544) do
+ActiveRecord::Schema.define(version: 2022_06_06_153532) do
+
+  create_table "books", force: :cascade do |t|
+    t.integer "isbn_number"
+    t.string "title"
+    t.text "notes"
+    t.string "teacher"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "clients", force: :cascade do |t|
   end
@@ -25,14 +34,15 @@ ActiveRecord::Schema.define(version: 2022_05_23_175544) do
 
   create_table "rentals", force: :cascade do |t|
     t.string "condition"
-    t.date "return_ate"
-    t.date "estimatte_return_date"
+    t.date "return_date"
+    t.date "estimate_return_date"
     t.date "rented_date"
+    t.string "rentable_type"
+    t.integer "rentable_id"
     t.integer "user_id", null: false
-    t.integer "item_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["item_id"], name: "index_rentals_on_item_id"
+    t.index ["rentable_type", "rentable_id"], name: "index_rentals_on_rentable"
     t.index ["user_id"], name: "index_rentals_on_user_id"
   end
 
@@ -67,7 +77,15 @@ ActiveRecord::Schema.define(version: 2022_05_23_175544) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "rentals", "items"
+  create_table "vans", force: :cascade do |t|
+    t.integer "vyear"
+    t.string "vmake"
+    t.string "vmodel"
+    t.text "notes"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   add_foreign_key "rentals", "users"
   add_foreign_key "roles_users", "roles"
   add_foreign_key "roles_users", "users"

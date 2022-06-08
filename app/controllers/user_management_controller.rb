@@ -1,7 +1,7 @@
 class UserManagementController < ApplicationController
   before_action :authenticate_user!
   def assign_roles
-    @users = User.all
+    @users = policy_scope(User, policy_scope_class: UserManagementPolicy::Scope)
     @roles = Role.all
     authorize @user, policy_class: UserManagementPolicy
     @status = get_status
@@ -21,8 +21,14 @@ class UserManagementController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
-    @roles = Role.all
-    authorize :dashboard, :edit?
+    @roles = policy_scope(Role, policy_scope_class: UserManagementPolicy::Scope)
+    if @user.roles.first.nil?
+      @role = default_role(@user)
+      authorize @user, policy_class: UserManagementPolicy
+    else
+      @role = Role.where(name: @user.roles.first.name)
+      authorize @user, policy_class: UserManagementPolicy
+    end
   end
 
   def create
@@ -41,34 +47,24 @@ class UserManagementController < ApplicationController
     end
   end
 
-  def update_resource(resource, params)
-    # Require current password if user is trying to change password.
-    return super if params[user.password]&.present?
-
-    # Allows user to update registration information without password.
-    resource.update_without_password(params.except("current_password"))
-  end
   def update
-
-    authorize :dashboard, :update?
-    @role = Role.where(id: params[:role_id]).take
-
-    if URI(request.referer).path == '/user_management/edit'
+    if URI(request.referer).path == '/user_management/create' || URI(request.referer).path == '/user_management/new'
+      @user = params[:user]
+    else
       @user = User.find(params[:id])
-    elsif URI(request.referer).path == '/user_management/create'
-      @user = params[:user]
-    elsif URI(request.referer).path == '/user_management/new'
-      @user = params[:user]
     end
-
-    if @role.present?
+    if params[:role].present?
+      @role = Role.where(id: params[:role][:role_id]).first
+      authorize @role, policy_class: UserManagementPolicy
       @user.roles.clear
       @user.roles << @role
       respond_to do |format|
-        format.html { redirect_to user_management_edit_path(id: @user), notice: "User was successfully updated." }
+        format.html { redirect_to user_management_edit_path(id: @user), notice: "User's role was successfully updated." }
         format.json { render :show, status: :ok, location: @user }
       end
     else
+      @role = Role.where(name: @user.roles.first)
+      authorize @role, policy_class: UserManagementPolicy
       respond_to do |format|
         if @user.update(user_params.except(:role_id, :_method, :authenticity_token, :commit))
           format.html { redirect_to user_management_edit_path(id: @user), notice: "User was successfully updated." }
@@ -93,7 +89,7 @@ class UserManagementController < ApplicationController
   end
 
   def get_status
-    @users = User.all
+    @users = policy_scope(User, policy_scope_class: UserManagementPolicy::Scope)
     @rentals = Rental.all
     @items = Item.all
     stat_arr = []
@@ -102,8 +98,8 @@ class UserManagementController < ApplicationController
         users_late_items = ""
         counter = -3
         userx.rentals.each do |rentalx|
-          if rentalx.estimatte_return_date.nil? || rentalx.estimatte_return_date.past?
-            if rentalx.return_ate.nil?
+          if rentalx.estimate_return_date.nil? || rentalx.estimate_return_date.past?
+            if rentalx.return_date.nil?
               users_late_items << rentalx.item.name + ", "
               counter += 1
             end
@@ -128,8 +124,9 @@ class UserManagementController < ApplicationController
     end
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:_method, :role, :id, :email, :password, :id_number, :name, :phone, :password_confirmation, :authenticity_token, :commit)
+      params.require(:user).permit(:role_id, :_method, :role, :id, :email, :password, :id_number, :name, :phone, :password_confirmation, :authenticity_token, :commit)
     end
+
     def update_params
       params.permit(:role_id, :user, :_method, :role, :id, :email, :password, :id_number, :name, :phone, :password_confirmation, :authenticity_token, :commit)
     end

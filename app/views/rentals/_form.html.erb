@@ -18,12 +18,12 @@
 
   <div class="field">
     <%= form.label :return_date %>
-    <%= form.date_select(:return_ate, include_blank: true) %>
+    <%= form.date_select(:return_date, include_blank: true) %>
   </div>
 
   <div class="field">
-    <%= form.label :estimatte_return_date %>
-    <%= form.date_select(:estimatte_return_date, default: 30.days.from_now) %>
+    <%= form.label :estimate_return_date %>
+    <%= form.date_select(:estimate_return_date, default: 30.days.from_now) %>
   </div>
 
   <div class="field">
@@ -36,12 +36,10 @@
     <%= form.text_field :user_id %>
   </div>
 
-  <div class="field">
-    <%= form.label :item_id %>
-    <%= form.text_field :item_id %>
-  </div>
+  <%= collection_select(:rental, :rentable_type, :rentable_type, :rentable_id, :rentable_type, prompt: true) %>
 
   <div class="actions">
     <%= form.submit %>
   </div>
+
 <% end %>

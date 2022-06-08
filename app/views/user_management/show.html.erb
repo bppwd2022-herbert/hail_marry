@@ -47,13 +47,13 @@
       <%= rentalx.rented_date %>
     </p>
 
-    <% if rentalx.return_ate.nil? || rentalx.return_ate.to_date.future? %>
+    <% if rentalx.return_date.nil? || rentalx.return_date.to_date.future? %>
       <p class="ps-4"> Estimate Return Date: 
-        <%= rentalx.estimatte_return_date %>
+        <%= rentalx.estimate_return_date %>
       </p>
     <% else %>
       <p class="ps-4"> Returned On: 
-        <%= rentalx.return_ate %>
+        <%= rentalx.return_date %>
       </p>
     <% end %>
     <p class="ps-4">Rental Id: 

@@ -62,4 +62,22 @@ class RolePolicy < ApplicationPolicy
       false
     end
   end
+
+  class Scope
+    attr_reader :user, :scope
+
+    def initialize(user, scope)
+      @user = user
+      @scope = scope
+      @role = user.roles.first.name
+    end
+
+    def resolve
+      if @role == "IT Director"
+        scope.all.order('id')
+      elsif @role == "Employee"
+        scope.where(roles: {name: ["Teacher", "Student", "Employee"]}).order('id')
+      end
+    end
+  end
 end

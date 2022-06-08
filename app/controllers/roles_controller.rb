@@ -4,7 +4,7 @@ class RolesController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :go_home
   # GET /roles or /roles.json
   def index
-    @roles = Role.all
+    @roles = policy_scope(Role, policy_scope_class: RolePolicy::Scope)
     authorize :dashboard, :index?
   end
 

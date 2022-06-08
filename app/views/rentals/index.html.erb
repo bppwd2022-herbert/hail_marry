@@ -5,13 +5,16 @@
 <table class="table">
   <thead>
     <tr>
+      <th>Rental Id</th>
       <th>Condition</th>
       <th>Return date</th>
       <th>Estimate return date</th>
       <th>Rented date</th>
-      <th>User</th>
-      <th>Item</th>
-      <th>Id</th>
+      <th>User's Name</th>
+      <th>User's Id</th>
+      <th>Item's Id</th>
+      <th>Item's Name</th>
+
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -19,15 +22,15 @@
   <tbody>
     <% @rentals.each do |rental| %>
       <tr>
-        <td><%= rental.condition %></td>
-        <td><%= rental.return_ate %></td>
-        <td><%= rental.estimatte_return_date %></td>
-        <td><%= rental.rented_date %></td>
-        
-        <td><%= rental.user_id %></td>
-        <td><%= rental.item_id %></td>
         <td><%= rental.id %></td>
-
+        <td><%= rental.condition %></td>
+        <td><%= rental.return_date %></td>
+        <td><%= rental.estimate_return_date %></td>
+        <td><%= rental.rented_date %></td>
+        <td><%= User.find(rental.user_id).name %></td>
+        <td><%= User.find(rental.user_id).id %></td>
+        <td><%= Item.find(rental.item_id).name %></td>
+        <td><%= Item.find(rental.item_id).id %></td>
         <td><%= link_to 'Show', rental %></td>
         <td><%= link_to 'Edit', edit_rental_path(rental) %></td>
         <td><%= link_to 'Destroy', rental, method: :delete, data: { confirm: 'Are you sure?' } %></td>

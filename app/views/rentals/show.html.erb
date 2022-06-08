@@ -1,5 +1,8 @@
 <p id="notice"><%= notice %></p>
-
+<p>
+  <strong>Rental Id:</strong>
+  <%= @rental.id %>
+</p>
 <p>
   <strong>Condition:</strong>
   <%= @rental.condition %>
@@ -7,12 +10,12 @@
 
 <p>
   <strong>Return ate:</strong>
-  <%= @rental.return_ate %>
+  <%= @rental.return_date %>
 </p>
 
 <p>
   <strong>Estimatte return date:</strong>
-  <%= @rental.estimatte_return_date %>
+  <%= @rental.estimate_return_date %>
 </p>
 
 <p>
@@ -21,20 +24,24 @@
 </p>
 
 <p>
-  <strong>User:</strong>
-  <%= @rental.user_id %>
+  <strong>User Id:</strong>
+  <%= @user.id %>
 </p>
 
 <p>
-  <strong>Item:</strong>
-  <%= @rental.item_id %>
+  <strong>User Name:</strong>
+  <%= @user.name %>
 </p>
 
 <p>
-  <strong>Id:</strong>
-  <%= @rental.id %>
+  <strong>Item Id:</strong>
+  <%= @item.id %>
 </p>
 
+<p>
+  <strong>Item Nmae:</strong>
+  <%= @item.name %>
+</p>
 
 <%= link_to 'Edit', edit_rental_path(@rental) %> |
 <%= link_to 'Back', rentals_path %>

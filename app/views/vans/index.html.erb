@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Vans</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Van Year</th>
+      <th>Van Make</th>
+      <th>Van Model</th>
+      <th>Notes</th>
+      <th>Id</th>
+      <th>Availability</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @vans.each_with_index do |vanx, index| %>
+      <tr>
+        <td><%= vanx.vyear %></td>
+        <td><%= vanx.vmake %></td>
+        <td><%= vanx.vmodel %></td>
+        <td><%= vanx.notes %></td>
+        <td><%= vanx.id %></td>
+        <td><%= @availables[index] %></td>
+        <td><%= link_to 'Show', vanx %></td>
+        <td><%= link_to 'Edit', edit_van_path(vanx) %></td>
+        <td><%= link_to 'Destroy', vanx, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<%= link_to 'New Van', new_van_path %>

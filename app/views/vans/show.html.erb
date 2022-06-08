@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Van year:</strong>
+  <%= @van.vyear %>
+</p>
+
+<p>
+  <strong>Van make:</strong>
+  <%= @van.vmake %>
+</p>
+
+<p>
+  <strong>Van model:</strong>
+  <%= @van.vmodel %>
+</p>
+
+<p>
+  <strong>Van Id:</strong>
+  <%= @van.id %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @van.notes %>
+</p>
+
+<%= link_to 'Edit', edit_van_path(@van) %> |
+<%= link_to 'Back', vans_path %>

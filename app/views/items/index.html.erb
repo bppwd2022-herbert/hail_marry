@@ -9,7 +9,7 @@
       <th>Description</th>
       <th>Notes</th>
       <th>ID</th>
-      <th>Rentable</th>
+      <th>Availability</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -21,7 +21,7 @@
         <td><%= item.description %></td>
         <td><%= item.notes %></td>
         <td><%= item.id %></td>
-        <td><%= @rentables[index] %></td>
+        <td><%= @availables[index] %></td>
         <td><%= link_to 'Show', item %></td>
         <td><%= link_to 'Edit', edit_item_path(item) %></td>
         <td><%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>

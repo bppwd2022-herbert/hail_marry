@@ -18,7 +18,7 @@
   </thead>
 
   <tbody>
-    <% @users.each do |userx| %>
+    <% @users.each_with_index do |userx, index| %>
       <tr>
         <td> <%= userx.name %> </td>
         <td> <%= userx.id_number %> </td>
@@ -29,7 +29,13 @@
           <td> <%= rolex.name %> </td>
           <td> <%= rolex.id %> </td>
         <% end %>
-        
+        <% if @status[index] == "No Rented Items" %>
+          <td> <%= @status[index] %> </td>
+        <% elsif @status[index] == "No Late Items" %>
+          <td class="text-primary"> <%= @status[index] %> </td>
+        <% else %>
+          <td class="text-danger"> <%= @status[index] %> </td>
+        <% end %>
         <td><%= link_to 'Show', user_management_show_path(id: userx.id) %></td>
         <td><%= link_to 'Edit', user_management_edit_path(id: userx.id) %></td>
         <td><%= link_to "Delete", user_registration_path(userx, id: userx.id), :method => :delete, data: { confirm: 'Are you sure you want to delete this user?' } %></td>
