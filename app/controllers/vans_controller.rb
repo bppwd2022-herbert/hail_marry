@@ -37,6 +37,7 @@ class VansController < ApplicationController
 
     respond_to do |format|
       if @van.save
+        @van.name = @van.vyear + " " + @van.vmake + " " + @van.vmodel
         format.html { redirect_to van_url(@van), notice: "Van was successfully created." }
         format.json { render :show, status: :created, location: @van }
       else
@@ -50,6 +51,7 @@ class VansController < ApplicationController
   def update
     respond_to do |format|
       if @van.update(van_params)
+        @van.name = @van.vyear.to_s + " " + @van.vmake + " " + @van.vmodel
         format.html { redirect_to van_url(@van), notice: "Van was successfully updated." }
         format.json { render :show, status: :ok, location: @van }
       else

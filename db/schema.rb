@@ -15,8 +15,10 @@ ActiveRecord::Schema.define(version: 2022_06_06_153532) do
   create_table "books", force: :cascade do |t|
     t.integer "isbn_number"
     t.string "title"
+    t.string "author"
     t.text "notes"
     t.string "teacher"
+    t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -82,6 +84,7 @@ ActiveRecord::Schema.define(version: 2022_06_06_153532) do
     t.string "vmake"
     t.string "vmodel"
     t.text "notes"
+    t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

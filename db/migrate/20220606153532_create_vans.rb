@@ -5,7 +5,7 @@ class CreateVans < ActiveRecord::Migration[6.1]
       t.string :vmake
       t.string :vmodel
       t.text :notes
-
+      t.string :name
       t.timestamps
     end
   end

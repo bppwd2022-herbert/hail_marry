@@ -36,7 +36,15 @@
     <%= form.text_field :user_id %>
   </div>
 
-  <%= collection_select(:rental, :rentable_type, :rentable_type, :rentable_id, :rentable_type, prompt: true) %>
+  <div class="field">
+    <%= form.label :rentable_type %>
+    <%= form.text_field :rentable_type %>
+  </div>
+
+  <div class="field">
+    <%= form.label :rentable_id, "Rentable Id" %>
+    <%= form.text_field :rentable_id %>
+  </div>
 
   <div class="actions">
     <%= form.submit %>

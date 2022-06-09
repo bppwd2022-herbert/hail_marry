@@ -6,13 +6,14 @@ class RentalsController < ApplicationController
     @rentals = policy_scope(Rental, policy_scope_class: RentalPolicy::Scope)
     @users = User.all
     @items = Item.all
+
     authorize @user, policy_class: RentalPolicy
   end
 
   # GET /rentals/1 or /rentals/1.json
   def show
     @user = User.where(id: @rental.user_id).first
-    @item = Item.where(id: @rental.item_id).first
+    @rentable = get_rentable(@rental)
     authorize :dashboard, :show?
   end
 
@@ -69,6 +70,15 @@ class RentalsController < ApplicationController
     end
   end
 
+  helper_method :get_rentable
+  def get_rentable(rnt)
+    @rntable = rnt.rentable_type.constantize.find(rnt.rentable_id)
+    puts "================================"
+    puts @rntable.name
+    puts "================================"
+    return @rntable
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_rental
@@ -76,11 +86,11 @@ class RentalsController < ApplicationController
     end
 
     def set_rentable_list
-      rentable_list = []
-      puts "================================"
-      puts @rentable.rentable_type
-      puts "================================"
-      return rentable_list
+      # rentable_list = []
+      # puts "================================"
+      # puts @user.rentables
+      # puts "================================"
+      # return rentable_list
     end
     # Only allow a list of trusted parameters through.
     def rental_params

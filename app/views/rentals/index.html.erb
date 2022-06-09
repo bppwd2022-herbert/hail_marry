@@ -12,8 +12,9 @@
       <th>Rented date</th>
       <th>User's Name</th>
       <th>User's Id</th>
-      <th>Item's Id</th>
-      <th>Item's Name</th>
+      <th>Rentable Type</th>
+      <th>Rentable Id</th>
+      <th>Rentable Name</th>
 
       <th colspan="3"></th>
     </tr>
@@ -29,8 +30,9 @@
         <td><%= rental.rented_date %></td>
         <td><%= User.find(rental.user_id).name %></td>
         <td><%= User.find(rental.user_id).id %></td>
-        <td><%= Item.find(rental.item_id).name %></td>
-        <td><%= Item.find(rental.item_id).id %></td>
+        <td><%= rental.rentable_type %></td>
+        <td><%= rental.rentable_id %></td>
+        <td><%= get_rentable(rental).name %></td>
         <td><%= link_to 'Show', rental %></td>
         <td><%= link_to 'Edit', edit_rental_path(rental) %></td>
         <td><%= link_to 'Destroy', rental, method: :delete, data: { confirm: 'Are you sure?' } %></td>

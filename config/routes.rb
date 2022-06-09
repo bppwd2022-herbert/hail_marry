@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resources :books
   resources :rentals
   resources :items
-
+  # get 'rental/get_rentable'
   get 'user_management/assign_roles'
   patch 'user_management/update'
   get 'user_management/show'
