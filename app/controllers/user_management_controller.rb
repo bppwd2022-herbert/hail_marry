@@ -91,24 +91,23 @@ class UserManagementController < ApplicationController
   def get_status
     @users = policy_scope(User, policy_scope_class: UserManagementPolicy::Scope)
     @rentals = Rental.all
-    @items = Item.all
     stat_arr = []
     @users.each do |userx|
       if userx.rentals.present?
-        users_late_items = ""
+        users_late_objects = ""
         counter = -3
         userx.rentals.each do |rentalx|
           if rentalx.estimate_return_date.nil? || rentalx.estimate_return_date.past?
             if rentalx.return_date.nil?
-              users_late_items << rentalx.item.name + ", "
+              users_late_objects << helpers.get_rentable(rentalx).name + ", "
               counter += 1
             end
           end
         end
-        if users_late_items.empty?
+        if users_late_objects.empty?
           stat_arr << "No Late Items"
         else
-          stat_arr << users_late_items[0...counter]
+          stat_arr << users_late_objects[0...counter]
         end
       else
         stat_arr << "No Rented Items"

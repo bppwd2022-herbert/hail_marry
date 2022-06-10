@@ -9,8 +9,12 @@
 </p>
 
 <p>
-  <strong>Return ate:</strong>
-  <%= @rental.return_date %>
+  <strong>Return date:</strong>
+  <% if @rental.return_date.nil? || @rental.return_date.future? %>
+    Currently out
+  <% else %>
+    <%= @rental.return_date %>
+  <% end %>
 </p>
 
 <p>
@@ -34,13 +38,18 @@
 </p>
 
 <p>
-  <strong>Item Id:</strong>
-  <%= @item.id %>
+  <strong>Rentable Category:</strong>
+  <%= get_rentable(@rental).model_name %>
 </p>
 
 <p>
-  <strong>Item Nmae:</strong>
-  <%= @item.name %>
+  <strong>Rentable Id:</strong>
+  <%= get_rentable(@rental).id %>
+</p>
+
+<p>
+  <strong>Rentable Name:</strong>
+  <%= get_rentable(@rental).name %>
 </p>
 
 <%= link_to 'Edit', edit_rental_path(@rental) %> |

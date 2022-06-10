@@ -7,7 +7,12 @@
 
 <p>
   <strong>Description:</strong>
-  <%= @role.description %>
+  <%= simple_format(@role.description) %>
+</p>
+
+<p>
+  <strong>Id:</strong>
+  <%= @role.id %>
 </p>
 
 <%= link_to 'Edit', edit_role_path(@role) %> |

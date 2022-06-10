@@ -9,7 +9,7 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @rentals = Rental.where(item_id: params[:id])
+    @rentals = Rental.where(rentable_id: params[:id])
     @available = true
     @rentals.each do |rentalx|
       if rentalx.return_date.nil?
@@ -77,17 +77,14 @@ class ItemsController < ApplicationController
   def is_available
     @items = Item.all
     available_items = []
-
     @items.each do |itemx|
-      item_rentals = Rental.where(item_id: itemx.id)
+      item_rentals = Rental.where(rentable_type: "Item", rentable_id: itemx.id)
       available = true
-      
       item_rentals.each do |rentalx|
         if rentalx.return_date.nil? || rentalx.return_date.future?
           available = false
         end
       end
-
       available_items << available
     end
     return available_items

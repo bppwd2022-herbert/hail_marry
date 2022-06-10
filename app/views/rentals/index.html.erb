@@ -25,7 +25,13 @@
       <tr>
         <td><%= rental.id %></td>
         <td><%= rental.condition %></td>
-        <td><%= rental.return_date %></td>
+        <td>
+          <% if rental.return_date.nil? || rental.return_date.future? %>
+            Currently out
+          <% else %>
+            <%= rental.return_date %>
+          <% end %>
+        </td>
         <td><%= rental.estimate_return_date %></td>
         <td><%= rental.rented_date %></td>
         <td><%= User.find(rental.user_id).name %></td>

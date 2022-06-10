@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2022_06_06_153532) do
     t.text "notes"
     t.string "teacher"
     t.string "name"
+    t.integer "year"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

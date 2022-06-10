@@ -46,7 +46,11 @@ class UserManagementPolicy < ApplicationPolicy
 
     def resolve
       if @role == "IT Director"
-        scope.all.order('id')
+        if scope == User
+          scope.joins(:roles).all.order('role_id, id ASC')
+        elsif scope == Role
+          scope.all.order('id')
+        end
       elsif @role == "Employee"
         if scope == User
           scope.joins(:roles).where(roles: {name: ["Teacher", "Student", "Employee"]}).order('role_id, id ASC')

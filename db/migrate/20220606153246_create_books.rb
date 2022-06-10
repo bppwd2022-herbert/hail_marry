@@ -7,6 +7,7 @@ class CreateBooks < ActiveRecord::Migration[6.1]
       t.text :notes
       t.string :teacher
       t.string :name
+      t.integer :year
 
       t.timestamps
     end

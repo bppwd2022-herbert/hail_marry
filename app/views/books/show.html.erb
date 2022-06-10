@@ -11,6 +11,16 @@
 </p>
 
 <p>
+  <strong>Author:</strong>
+  <%= @book.author %>
+</p>
+
+<p>
+  <strong>Edition:</strong>
+  <%= @book.year %>
+</p>
+
+<p>
   <strong>Notes:</strong>
   <%= @book.notes %>
 </p>
@@ -18,6 +28,11 @@
 <p>
   <strong>Teacher:</strong>
   <%= @book.teacher %>
+</p>
+
+<p>
+  <strong>Availability:</strong>
+  <%= @available %>
 </p>
 
 <%= link_to 'Edit', edit_book_path(@book) %> |
