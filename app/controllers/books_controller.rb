@@ -1,16 +1,16 @@
 class BooksController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_book, only: %i[ show edit update destroy ]
 
-  # GET /books or /books.json
   def index
+    authorize :dashboard, :index?
     @books = Book.all
     @availables = is_available
-    authorize :dashboard, :index?
   end
 
-  # GET /books/1 or /books/1.json
   def show
-    @rentals = Rental.where(rentable_id: params[:id])
+  authorize :dashboard, :show?
+    @rentals = @book.rentals.all
     @available = true
     @rentals.each do |rentalx|
       if rentalx.return_date.nil?
@@ -23,17 +23,17 @@ class BooksController < ApplicationController
     end
   end
 
-  # GET /books/new
   def new
+    authorize :dashboard, :new?
     @book = Book.new
   end
 
-  # GET /books/1/edit
   def edit
+    authorize @book, :mid?
   end
 
-  # POST /books or /books.json
   def create
+    authorize :book, book_params[:teacher]
     @book = Book.new(book_params)
     @book.name = @book.title + " by " + @book.author + " (" + @book.year.to_s + " Edition)"
     respond_to do |format|
@@ -47,8 +47,8 @@ class BooksController < ApplicationController
     end
   end
 
-  # PATCH/PUT /books/1 or /books/1.json
   def update
+    authorize :dashboard, :update?
     @book.name = @book.title + " by " + @book.author + " (" + @book.year.to_s + " Edition)"
     respond_to do |format|
       if @book.update(book_params)
@@ -61,16 +61,14 @@ class BooksController < ApplicationController
     end
   end
 
-  # DELETE /books/1 or /books/1.json
   def destroy
+    authorize :dashboard, :destroy?
     @book.destroy
-
     respond_to do |format|
       format.html { redirect_to books_url, notice: "Book was successfully destroyed." }
       format.json { head :no_content }
     end
   end
-
 
   def is_available
     @books = Book.all
@@ -90,13 +88,11 @@ class BooksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_book
       @book = Book.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def book_params
-      params.require(:book).permit(:isbn_number, :title, :notes, :teacher, :author, :year)
+      params.require(:book).permit(:isbn_number, :creator, :title, :notes, :teacher, :author, :year)
     end
 end

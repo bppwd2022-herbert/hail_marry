@@ -38,15 +38,15 @@
   <strong>Rentals:</strong>
   <% @user.rentals.each do |rentalx| %>
     <p class="ps-1"> - 
-      <%= rentalx.item.name %>
-      Id: 
-      <%= rentalx.item_id %>
+      <%= rentalx.rentable_type %> Id:
+      <%= rentalx.rentable_id %>
     </p>
-
+    <p class="ps-4">Name: 
+      <%= get_rentable(rentalx).name %>
+    </p>
     <p class="ps-4">Rented On: 
       <%= rentalx.rented_date %>
     </p>
-
     <% if rentalx.return_date.nil? || rentalx.return_date.to_date.future? %>
       <p class="ps-4"> Estimate Return Date: 
         <%= rentalx.estimate_return_date %>

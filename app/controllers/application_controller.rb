@@ -15,14 +15,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
-
-  
-  # class String
-    def user_not_authorized
-      flash[:alert] = "You are not authorized to perform this action."
-      redirect_to home_index_path
-    end
-  # end
+  def user_not_authorized
+    flash[:alert] = "You are not authorized to perform this action."
+    redirect_to home_index_path
+  end
 
   def role_check
     if @user_name != "Guest"

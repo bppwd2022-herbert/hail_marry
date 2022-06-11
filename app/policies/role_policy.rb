@@ -1,12 +1,4 @@
 class RolePolicy < ApplicationPolicy
-  attr_reader :user, :record
-
-  def initialize(user, _record)
-    @user = user
-    @record = _record
-    @role = user.roles.first.name
-  end
-
   def show?
     if @role == "IT Director"
       true
@@ -63,15 +55,7 @@ class RolePolicy < ApplicationPolicy
     end
   end
 
-  class Scope
-    attr_reader :user, :scope
-
-    def initialize(user, scope)
-      @user = user
-      @scope = scope
-      @role = user.roles.first.name
-    end
-
+  class Scope < Scope
     def resolve
       if @role == "IT Director"
         scope.all.order('id')

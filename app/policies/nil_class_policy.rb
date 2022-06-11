@@ -6,6 +6,6 @@ class NilClassPolicy < ApplicationPolicy
     end
   
     def show?
-      false # Nobody can see nothing
+      false
     end
 end

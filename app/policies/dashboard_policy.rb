@@ -1,37 +1,26 @@
-class DashboardPolicy
-    attr_reader :user, :record
+class DashboardPolicy < ApplicationPolicy
+  def create?
+    @role == "IT Director" || @role == "Employee" || @role == "Staff"
+  end
 
-    def initialize(user, _record)
-        @user = user
-        @record = _record
-        @role = user.roles.first.name
-    end
+  def new?
+    @role == "IT Director" || @role == "Employee" || @role == "Staff"
+  end
 
-    def create?
-        @role == "IT Director" || @role == "Employee"
-    end
+  def show?
+    @role != "Student"
+  end
 
-    def new?
-        @role == "IT Director" || @role == "Employee"
-    end
+  def index?
+    @role != "Student"
+  end
 
-    def show?
-        @role == "IT Director" || @role == "Employee"
-    end
+  def update?
+    @role == "IT Director" || @role == "Employee" || @role == "Staff"
+  end
 
-    def index?
-        @role == "IT Director" || @role == "Employee"
-    end
-
-    def edit?
-        @role == "IT Director" || @role == "Employee"
-    end
-
-    def update?
-        @role == "IT Director" || @role == "Employee"
-    end
-
-    def destroy?
-        @role == "IT Director" || @role == "Employee"
-    end
+  def destroy?
+    @role == "IT Director" || @role == "Employee" || @role == "Staff"
+  end
 end
+

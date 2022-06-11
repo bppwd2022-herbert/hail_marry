@@ -2,13 +2,14 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_item, only: %i[ show edit update destroy ]
   def index
+    authorize :dashboard, :index?
     @items = Item.all
     @rentals = Rental.all
     @availables = is_available
-    authorize :dashboard, :index?
   end
 
   def show
+    authorize :dashboard, :show?
     @rentals = Rental.where(rentable_id: params[:id])
     @available = true
     @rentals.each do |rentalx|
@@ -20,12 +21,11 @@ class ItemsController < ApplicationController
         end
       end
     end
-    authorize :dashboard, :show?
   end
 
   def new
-    @item = Item.new
     authorize :dashboard, :new?
+    @item = Item.new
   end
 
   def edit
@@ -33,8 +33,8 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item = Item.new(item_params)
     authorize :dashboard, :create?
+    @item = Item.new(item_params)
     respond_to do |format|
       if @item.save
         format.html { redirect_to item_url(@item), notice: "Item was successfully created." }

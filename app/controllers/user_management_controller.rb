@@ -95,22 +95,23 @@ class UserManagementController < ApplicationController
     @users.each do |userx|
       if userx.rentals.present?
         users_late_objects = ""
-        counter = -3
-        userx.rentals.each do |rentalx|
+        userx.rentals.each_with_index do |rentalx, index|
           if rentalx.estimate_return_date.nil? || rentalx.estimate_return_date.past?
             if rentalx.return_date.nil?
-              users_late_objects << helpers.get_rentable(rentalx).name + ", "
-              counter += 1
+              users_late_objects << helpers.get_rentable(rentalx).name
+              if index != userx.rentals.size - 1
+                users_late_objects << ", "
+              end
             end
           end
         end
         if users_late_objects.empty?
-          stat_arr << "No Late Items"
+          stat_arr << "No Late Objects"
         else
-          stat_arr << users_late_objects[0...counter]
+          stat_arr << users_late_objects
         end
       else
-        stat_arr << "No Rented Items"
+        stat_arr << "No Rented Objects"
       end
     end
     return stat_arr

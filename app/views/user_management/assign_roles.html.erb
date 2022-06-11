@@ -12,7 +12,7 @@
       <th>Id</th>
       <th>Role</th>
       <th>Role Id</th>
-      <th>Late Items</th>
+      <th>Late Objects</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -29,9 +29,9 @@
           <td> <%= rolex.name %> </td>
           <td> <%= rolex.id %> </td>
         <% end %>
-        <% if @status[index] == "No Rented Items" %>
+        <% if @status[index] == "No Rented Objects" %>
           <td> <%= @status[index] %> </td>
-        <% elsif @status[index] == "No Late Items" %>
+        <% elsif @status[index] == "No Late Objects" %>
           <td class="text-primary"> <%= @status[index] %> </td>
         <% else %>
           <td class="text-danger"> <%= @status[index] %> </td>
